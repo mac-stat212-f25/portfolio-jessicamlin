@@ -91,7 +91,7 @@ ggplot(yearly, aes(year, mean_md)) +
   )
 ```
 
-### Severity via Depth
+### Severity Via Depth
 
 > Seismic events at Vesuvius were consistently shallow, but their depth shifted over time.
 > Between 2014 and 2018, events trended slightly shallower, while from 2019 to 2024, they grew deeper, culminating in the greatest depth in 2024.
@@ -129,7 +129,7 @@ ggplot(vesu_scatter, aes(x = duration_magnitude_md, y = depth_km)) +
   )
 ```
 
-### Conclusion
+## Conclusion
 
 > Between 2014 and 2024, seismic activity at Vesuvius has been marked by fluctuations in frequency, intensity, and depth.
 > While the number of events spiked in 2018 and 2024, the average magnitudes remained low overall, suggesting that most earthquakes were relatively weak.
