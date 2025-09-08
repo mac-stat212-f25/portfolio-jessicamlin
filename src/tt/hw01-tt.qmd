@@ -108,7 +108,7 @@ ggplot(yearly, aes(year, median_depth_km)) +
   )
 ```
 
-### Relationship Between Magnitude and Depth (2014-2024)
+### Relationship Between Magnitude and Depth
 
 > Most seismic events occurred at depths shallower than 1 km and with magnitudes clustered between 0 and 1 Md.
 > A few stronger events reached magnitudes near 3 Md, while negative magnitudes captured very small micro seismic activity.
