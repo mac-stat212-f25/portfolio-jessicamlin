@@ -21,28 +21,6 @@
     ]
   },
   {
-    "objectID": "src/tt/2025-07-08.html",
-    "href": "src/tt/2025-07-08.html",
-    "title": "TidyTuesday Sample 1",
-    "section": "",
-    "text": "Add content here",
-    "crumbs": [
-      "TidyTuesday",
-      "<span class='chapter-number'>2</span>  <span class='chapter-title'>TidyTuesday Sample 1</span>"
-    ]
-  },
-  {
-    "objectID": "src/tt/2025-07-15.html",
-    "href": "src/tt/2025-07-15.html",
-    "title": "TidyTuesday Sample 2",
-    "section": "",
-    "text": "Add content here",
-    "crumbs": [
-      "TidyTuesday",
-      "<span class='chapter-number'>3</span>  <span class='chapter-title'>TidyTuesday Sample 2</span>"
-    ]
-  },
-  {
     "objectID": "src/tt/hw01-tt.html",
     "href": "src/tt/hw01-tt.html",
     "title": "Homework 01",
@@ -50,7 +28,7 @@
     "text": "TidyTuesday Section\nExplore the week’s TidyTuesday challenge. Develop a research question, then answer it through a short data story with effective visualization(s). Provide sufficient background for readers to grasp your narrative.",
     "crumbs": [
       "TidyTuesday",
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Homework 01</span>"
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Homework 01</span>"
     ]
   },
   {
@@ -61,7 +39,7 @@
     "text": "Background\n\nMount Vesuvius is one of the most dangerous volcanoes in the world because of its history and its location near Naples, Italy, where millions of people live. While its last eruption was in 1944, the volcano has not been quiet. Scientists continuously monitor seismic activity to look for early warning signs of unrest. Each event is measured by its magnitude, which reflects how strong it was, and its depth, which shows how close it was to the surface. Understanding how the number and severity of these events has shifted over time is key for assessing risk.",
     "crumbs": [
       "TidyTuesday",
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Homework 01</span>"
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Homework 01</span>"
     ]
   },
   {
@@ -72,7 +50,7 @@
     "text": "Research Question\n\nHow has the number and severity of seismic events changed over the last decade (2014-2024)?",
     "crumbs": [
       "TidyTuesday",
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Homework 01</span>"
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Homework 01</span>"
     ]
   },
   {
@@ -83,29 +61,7 @@
     "text": "Findings\n\nCode# Loading Data\nlibrary(tidytuesdayR)\nlibrary(tidyverse)\nlibrary(lubridate)\ntuesdata &lt;- tidytuesdayR::tt_load('2025-05-13')\nvesuvius &lt;- tuesdata$vesuvius\n\n# Cleaning and Filtering to 2014-2024\nvesu &lt;- vesuvius %&gt;%\n  mutate(\n    time = ymd_hms(time, quiet = TRUE),\n    year = year(time)\n  ) %&gt;%\n  filter(year &gt;= 2014, year &lt;= 2024)\n\n\nYearly Summaries\n\nCodeyearly &lt;- vesu %&gt;%\n  group_by(year) %&gt;%\n  summarise(\n    n_events       = n(),\n    mean_md        = mean(duration_magnitude_md, na.rm = TRUE),\n    median_md      = median(duration_magnitude_md, na.rm = TRUE),\n    pct_strong_md2 = mean(duration_magnitude_md &gt;= 2, na.rm = TRUE) * 100,\n    median_depth_km= median(depth_km, na.rm = TRUE),\n    pct_shallow2km = mean(depth_km &lt;= 2, na.rm = TRUE) * 100\n  ) %&gt;%\n  ungroup()\n\nprint(yearly)\n\n# A tibble: 11 × 7\n    year n_events mean_md median_md pct_strong_md2 median_depth_km\n   &lt;dbl&gt;    &lt;int&gt;   &lt;dbl&gt;     &lt;dbl&gt;          &lt;dbl&gt;           &lt;dbl&gt;\n 1  2014      748  0.198       0.1           0.557           0.28 \n 2  2015     1018  0.0563      0             0.428           0.22 \n 3  2016      915  0.178       0.1           0.687           0.23 \n 4  2017      937  0.226       0.1           0.985           0.22 \n 5  2018     1316  0.180       0.1           0.778           0.215\n 6  2019     1231  0.0495      0             0.168           0.22 \n 7  2020     1198  0.236       0.1           1.02            0.22 \n 8  2021     1034  0.184       0.1           0.198           0.23 \n 9  2022      853  0.246       0.14          0.715           0.25 \n10  2023      865  0.301       0.24          1.78            0.26 \n11  2024     1315  0.139       0             0.779           0.305\n# ℹ 1 more variable: pct_shallow2km &lt;dbl&gt;\n\n\nFrequency: Events Per Year\n\nThe number of seismic events recorded each year varied greatly across the decade. Activity peaked in 2018 and again in 2024, both exceeding 1,300 events, while the lowest point occurred in 2014 with fewer than 750 events. This suggests alternating period of heightened and reduced seismic activity.\n\n\nCodeggplot(yearly, aes(year, n_events)) +\n  geom_line() +\n  geom_point() +\n  labs(\n    title = \"Seismic Events (2014–2024)\",\n    subtitle = \"Number of recorded events per year\",\n    x = \"Year\", y = \"Events\"\n  )\n\n\n\n\n\n\n\nSeverity Via Magnitude\n\nAverage magnitudes remained low overall, ranging mostly between 0.1 and 0.3 Md. While no long-term trend is visible, there were fluctuations, with stronger averages in 2017, 2020, 2022, and 2023 compared to weaker years like 2015 and 2019. This indicates that event intensity is variable from year to year but does not show steady growth or decline.\n\n\nCodeggplot(yearly, aes(year, mean_md)) +\n  geom_line() +\n  geom_point() +\n  labs(\n    title = \"Average Duration Magnitude (Md) by Year (2014-2024)\",\n    subtitle = \"Higher values indicate stronger events on average\",\n    x = \"Year\", y = \"Mean Md\"\n  )\n\n\n\n\n\n\n\nSeverity via Depth\n\nSeismic events at Vesuvius were consistently shallow, but their depth shifted over time. Between 2014 and 2018, events trended slightly shallower, while from 2019 to 2024, they grew deeper, culminating in the greatest depth in 2024. This pattern shows a gradual movement of seismic activity to deeper levels in recent years.\n\n\nCodeggplot(yearly, aes(year, median_depth_km)) +\n  geom_line() +\n  geom_point() +\n  labs(\n    title = \"Median Event Depth by Year (2014-2024)\",\n    subtitle = \"Smaller values = shallower events\",\n    x = \"Year\", y = \"Median depth (km)\"\n  )\n\n\n\n\n\n\n\nRelationship Between Magnitude and Depth (2014-2024)\n\nMost seismic events occurred at depths shallower than 1 km and with magnitudes clustered between 0 and 1 Md. A few stronger events reached magnitudes near 3 Md, while negative magnitudes captured very small micro seismic activity. Overall, the majority of events were both weak and shallow, with only a small proportion being larger or deeper.\n\n\nCodevesu_scatter &lt;- vesu %&gt;%\n  filter(!is.na(duration_magnitude_md), !is.na(depth_km))\n\nggplot(vesu_scatter, aes(x = duration_magnitude_md, y = depth_km)) +\n  geom_point(alpha = 0.15, size = 1) +\n  scale_y_reverse() +\n  labs(\n    title = \"Magnitude vs. Depth (2014–2024)\",\n    subtitle = \"Points are individual events; y-axis reversed so shallow is at the top\",\n    x = \"Duration magnitude (Md)\",\n    y = \"Depth (km; reversed)\"\n  )\n\n\n\n\n\n\n\nConclusion\n\nBetween 2014 and 2024, seismic activity at Vesuvius has been marked by fluctuations in frequency, intensity, and depth. While the number of events spiked in 2018 and 2024, the average magnitudes remained low overall, suggesting that most earthquakes were relatively weak. Depth patterns show that events have become deeper in more recent years, though they are still generally shallow. Taken together, these results highlight that seismic activity at Vesuvius is persistent but typically characterized by small, shallow earthquakes, with only occasional stronger or deeper events.",
     "crumbs": [
       "TidyTuesday",
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Homework 01</span>"
-    ]
-  },
-  {
-    "objectID": "src/ica/ica-sample1.html",
-    "href": "src/ica/ica-sample1.html",
-    "title": "ICA Sample 1",
-    "section": "",
-    "text": "Add content here",
-    "crumbs": [
-      "In-Class Activities",
-      "<span class='chapter-number'>5</span>  <span class='chapter-title'>ICA Sample 1</span>"
-    ]
-  },
-  {
-    "objectID": "src/ica/ica-sample2.html",
-    "href": "src/ica/ica-sample2.html",
-    "title": "ICA Sample 2",
-    "section": "",
-    "text": "Add content here",
-    "crumbs": [
-      "In-Class Activities",
-      "<span class='chapter-number'>6</span>  <span class='chapter-title'>ICA Sample 2</span>"
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Homework 01</span>"
     ]
   },
   {
@@ -116,7 +72,7 @@
     "text": "Exercise\nCarryout the following steps to clean and save the San Francisco Weather data. Make sure to download and add the data file to your portfolio repository as instructed.\nCode# Step 1\nlibrary(tidyverse)\nweather &lt;- read_csv(\"../../data/raw/weather.csv\")\n\n# Step 2\nweather_clean &lt;- weather |&gt; \n  mutate(PrecipYr = na_if(PrecipYr, 99999))\n\n# Step 3\nweather_clean &lt;- weather_clean |&gt; \n  arrange(Month, Day) |&gt; \n  mutate(dateInYear = 1:365)\n\nweather_clean &lt;- weather_clean |&gt; \n  mutate(dateInYear = yday(mdy(date)))\n\n# Step 4\nweather_clean |&gt; \n  mutate(month.name = month.abb[Month]) |&gt; \n  head()\n\n# A tibble: 6 × 20\n  Month   Day   Low  High NormalLow NormalHigh RecordLow LowYr RecordHigh HiYear\n  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;      &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt;      &lt;dbl&gt;  &lt;dbl&gt;\n1     1     1    47    52        44         56        31  1965         68   1996\n2     1     2    48    51        44         56        29  1960         69   1996\n3     1     3    45    53        44         56        31  1950         69   2000\n4     1     4    39    53        44         56        29  1949         62   2006\n5     1     5    38    55        44         56        26  1949         65   1986\n6     1     6    37    52        44         56        29  1950         66   2003\n# ℹ 10 more variables: Precip &lt;dbl&gt;, RecordPrecip &lt;dbl&gt;, PrecipYr &lt;dbl&gt;,\n#   date &lt;chr&gt;, Record &lt;lgl&gt;, RecordText &lt;chr&gt;, RecordP &lt;lgl&gt;, CulmPrec &lt;dbl&gt;,\n#   dateInYear &lt;dbl&gt;, month.name &lt;chr&gt;\n\nCode# Step 5",
     "crumbs": [
       "In-Class Activities",
-      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Cleaning SFO Weather Data</span>"
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Cleaning SFO Weather Data</span>"
     ]
   },
   {
@@ -127,51 +83,29 @@
     "text": "Read in the weather data in this file with the correct relative file path after you move it to the instructed location.\nThere is a variable that has values that don’t make sense in the data context. Figure out which variable this is and clean it up by making those values missing using na_if().\nCreate a variable called dateInYear that indicates the day of the year (1-365) for each case. (Jan 1 should be 1, and Dec 31 should be 365).\nCreate a variable called month_name that shows the 3-letter abbreviation for each case.\nSave the wrangled data to the data/processed/ folder using write_csv(). Name this file weather_clean.csv. Look up the documentation for this function by typing ?write_csv in the Console. You’ll need to write an appropriate relative path.",
     "crumbs": [
       "In-Class Activities",
-      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Cleaning SFO Weather Data</span>"
-    ]
-  },
-  {
-    "objectID": "src/appx/appx-sample1.html",
-    "href": "src/appx/appx-sample1.html",
-    "title": "Appendix A — Appendix Sample 1",
-    "section": "",
-    "text": "Add content here",
-    "crumbs": [
-      "Appendices",
-      "<span class='chapter-number'>A</span>  <span class='chapter-title'>Appendix Sample 1</span>"
-    ]
-  },
-  {
-    "objectID": "src/appx/appx-sample2.html",
-    "href": "src/appx/appx-sample2.html",
-    "title": "Appendix B — Appendix Sample 2",
-    "section": "",
-    "text": "Add content here",
-    "crumbs": [
-      "Appendices",
-      "<span class='chapter-number'>B</span>  <span class='chapter-title'>Appendix Sample 2</span>"
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Cleaning SFO Weather Data</span>"
     ]
   },
   {
     "objectID": "mm/mm.html",
     "href": "mm/mm.html",
-    "title": "Appendix C — Mind Maps",
+    "title": "Appendix A — Mind Maps",
     "section": "",
     "text": "Creativity",
     "crumbs": [
       "Appendices",
-      "<span class='chapter-number'>C</span>  <span class='chapter-title'>Mind Maps</span>"
+      "<span class='chapter-number'>A</span>  <span class='chapter-title'>Mind Maps</span>"
     ]
   },
   {
     "objectID": "mm/mm.html#creativity",
     "href": "mm/mm.html#creativity",
-    "title": "Appendix C — Mind Maps",
+    "title": "Appendix A — Mind Maps",
     "section": "",
     "text": "0808-mind_map_example.jpg",
     "crumbs": [
       "Appendices",
-      "<span class='chapter-number'>C</span>  <span class='chapter-title'>Mind Maps</span>"
+      "<span class='chapter-number'>A</span>  <span class='chapter-title'>Mind Maps</span>"
     ]
   }
 ]
