@@ -55,5 +55,5 @@ weather_clean |>
   head()
 
 # Step 5
-
+write_csv(weather_clean, file = "../../data/processed/weather_clean.csv")
 ```

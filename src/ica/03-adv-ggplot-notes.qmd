@@ -62,15 +62,15 @@ Examine the [NYTimes 2015 Temperature Visualization (html)](https://www.nytimes.
 **Data Storytelling** 
 
 - Relate the intro paragraph: "Scientists declared that 2015 was Earth’s hottest year on record..." to the *design* of the visualization.  In particular, based on the intro paragraph,
-  - What key message/claim does NYTimes want readers to be able to explore? 
-  - How did this goal inform what information is displayed in the visualization?
+  - What key message/claim does NYTimes want readers to be able to explore? NYT wants readers to explore their own cities and see how 2015 compares to the historical average temperature over the course of a year regardless of location.
+  - How did this goal inform what information is displayed in the visualization? It means that there is a part that shows the historical average and then one that shows the daily average from 2025 overlayed on one another. Then it also provides the option to switch through cities to compare how they have changed easier.
 
 **Aesthetic Mapping** 
 
 - What specific variables (from the data codebook) underlie the visualization?
 - How do these variables map to aesthetics of the visual elements, eg, position, size, shape, and color of glyphs?
 
-
+For x most likely the dateInYear or date variable, for y it is the Record Low/High overlayed with NormalHigh/NormalLow. Depending on the city there is RecordPrecip. Date in year makes up the x axis and is spkit into months very nicely, which each day making a small rectangular box. The record High and low are a redish pink cover overlayed on the grey to allow for comparison. The high and low make up either end of the box or each day, so longer boxes have more of a range of temperatures. Grey tends to take a more even slope/change as it are historical averages. They move from city to city up or down normally situating around a certain average temperature.
 
 
 ## Exercise 2
@@ -124,6 +124,7 @@ Look at the [`geom_linerange` documentation page](https://ggplot2.tidyverse.org/
 
 ```{r weather_plot_temp_records}
 ggplot(weather) +
+  geom_linerange(aes(x = dateInYear, ymax = RecordHigh, ymin = RecordLow), color = "#ECEBE3" ) + 
     theme_classic()
 ```
 
@@ -146,8 +147,11 @@ In your visualization, also display the usual temperatures (`NormalLow` and `Nor
 ![SFO observed, Average, and Record Daily Temperatures in 2011](https://hash-mac.github.io/stat212site-f25/images/sfo_second_graph.png)
 
 ```{r weather_plot_temp_all}
-
-
+ggplot(weather) +
+  geom_linerange(aes(x = dateInYear, ymax = RecordHigh, ymin = RecordLow), color = "#ECEBE3" ) + 
+  geom_linerange(aes(x = dateInYear, ymax = NormalHigh, ymin = NormalLow), color = "#C8B8BA") + 
+  geom_linerange(aes(x = dateInYear, ymax = High, ymin= Low), color = "#A90248") + 
+  theme_classic() 
 ```
 
 
@@ -161,8 +165,19 @@ If you'd like finer control of the width of these lines/rectangles, check out th
 Recreate the visual demarcations of the months by adding vertical lines separating the months.  Brainstorm how we might draw those vertical lines. What `geom` might we use?  What subset of the data might we use in that `geom` layer to draw lines only at the month divisions? 
 
 ```{r }
+# small data set with end of the month for each month, 
+Month_data <- weather |> 
+  group_by(Month) |> 
+  filter(Day == max(Day)) |> 
+  ungroup()
 
-
+ggplot() +
+  geom_linerange(data = weather, aes(x = dateInYear, ymax = RecordHigh, ymin = RecordLow), color = "#ECEBE3" ) + 
+  geom_linerange(data = weather, aes(x = dateInYear, ymax = NormalHigh, ymin = NormalLow), color = "#C8B8BA") + 
+  geom_linerange(data = weather, aes(x = dateInYear, ymax = High, ymin= Low), color = "#A90248") + 
+  # geom_rect(data = weather, aes(x = dateInYear, ymax = High, ymin= Low), fill = "#A90248",alpha = 0.3, inherit.aes = FALSE) + 
+  theme_classic() + 
+  geom_vline(data = Month_data, aes(xintercept = dateInYear), linetype = "dotted")
 ```
 
 
@@ -175,6 +190,29 @@ Change the x-axis labels so that the month names display in the center of each m
 R has built-in variables called `month.abb` and `month.name` that contain abbreviated and full month names.
 :::
 
+```{r}
+#Small data set with end of the month for each month, 
+Month_data <- weather |> 
+  group_by(Month) |> 
+  filter(Day == max(Day)) |> 
+  ungroup() 
+
+Mid_month <- weather |> 
+  group_by(Month) |> 
+  summarize(across(where(is.numeric), ~mean(.x, na.rm = TRUE)))
+
+month_numeric <- as.numeric(format(month, format = "%U"))
+month_label <- format(month, format = "%b")
+
+ggplot(weather) +
+  geom_linerange(aes(x = dateInYear, ymax = RecordHigh, ymin = RecordLow), color = "#ECEBE3" ) + 
+  geom_linerange(aes(x = dateInYear, ymax = NormalHigh, ymin = NormalLow), color = "#C8B8BA") + 
+  geom_linerange(aes(x = dateInYear, ymax = High, ymin= Low), color = "#A90248") + 
+  scale_x_continuous(breaks = Mid_month$dateInYear, labels = month.abb) + 
+  #geom_rect(data = weather, aes(x = dateInYear, ymax = High, ymin= Low), fill = "#A90248",alpha = 0.3, inherit.aes = FALSE) + 
+  theme_classic() + 
+  geom_vline(data = Month_data, aes(xintercept = dateInYear), linetype = "dotted")
+```
 
 Try to figuring out this new challenge using search engines and LLMs:
 
@@ -195,7 +233,22 @@ Create a precipitation plot that looks like the following.  Note that
 
 
 ```{r weather_plot_precip}
+Month_average <- weather |> 
+  group_by(Month) |> 
+  summarize(CulmPrec = max(CulmPrec), dateInYear = max(dateInYear))
 
+Record <- weather |> 
+  filter(RecordP == TRUE) 
+  
+
+ggplot(weather, aes(x = dateInYear, y = CulmPrec)) +
+  geom_area(fill = "#ebeae2", alpha = 0.5) +
+  geom_line(color = "#32a3d8", size = 0.5) +  
+  geom_text(data = Month_average, aes(label = round(CulmPrec, 2)), 
+            vjust = -0.5, size = 3) +
+  geom_point(data = Record, aes(x = dateInYear, y = CulmPrec), 
+             shape = 25, fill = "black", size = 2) + 
+  theme_minimal() 
 ```
 ## Done!
 
