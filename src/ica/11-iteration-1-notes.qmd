@@ -295,8 +295,18 @@ Within the different values of diamond `cut`, let's summarize the mean, median, 
 
 ```{r across_many_fns}
 diamonds |>
-    group_by(cut) |> 
-    summarize(across(.cols = where(is.numeric), .fns = list(mean = mean, med = median, sd = sd)))
+  dplyr::group_by(cut) |>
+  dplyr::summarize(
+    dplyr::across(
+      .cols = dplyr::where(is.numeric),
+      .fns = list(
+        mean = ~ mean(.x, na.rm = TRUE),
+        med  = ~ median(.x, na.rm = TRUE),
+        sd   = ~ sd(.x, na.rm = TRUE)
+      )
+    ),
+    .groups = "drop"
+  )
 ```
 
 What does the list of functions look like? What is the structure of this list object?
@@ -349,7 +359,7 @@ We can map any number of these choices to **arguments** in a custom model-fittin
 - `filter_to`: This could be a string description like "All cases", "Group 1", or "Groups 1 and 2"
 
 ```{r fit_model_example}
-fit_model <- function(data, impute, filter_to) {
+fit_model_example <- function(data, impute, filter_to) {
     if (impute) {
         data <- some_imputation_function(data)
     }
@@ -423,15 +433,13 @@ remove_outliers(diamonds, what_var = carat, sd_thresh = 3)
 3. Write a function called `fit_model` that implements the different settings for our `diamonds` analysis.
 
 ```{r eval=FALSE}
-fit_model <- function(data, mod_formula, remove_outliers) {
-    # remove_outliers is a TRUE/FALSE flag of whether or not to remove outliers
-  if(remove_outliers) {
-    data_clean <- remove_outliers(data, what_var = carat, sd_thresh = 3)  # This function implements our specific use case: outliers are cases that are 3 SDs away from the mean for the carat variable
+fit_model <- function(data, mod_formula, remove_outliers_flag) {
+  if (remove_outliers_flag) {
+    data_clean <- remove_outliers(data, what_var = carat, sd_thresh = 3)
   } else {
     data_clean <- data
   }
-   lm(mod_formula, data = data_clean)
-    # Use mod_formula as the first argument of lm()
+  lm(mod_formula, data = data_clean)
 }
 ```
 
@@ -453,14 +461,16 @@ Note that in `df_arg_combos`:
 
 ```{r}
 vec_for_mod <- vector(mode = "list", length = nrow(df_arg_combos))
+
 for (i in seq_along(vec_for_mod)) {
-  this_formula <- df_arg_combos$mod_formula[[i]] # Double [[ for the **list** of formulas
-  this_remove_outliers <- df_arg_combos$remove_outliers[i] # Single [ for the **atomic vector** of logicals
-    vec_for_mod[[i]] <- fit_model(
-        data = diamonds,
-        mod_formula = this_formula,
-        remove_outliers = this_remove_outliers
-    )
+  this_formula <- df_arg_combos$mod_formula[[i]]
+  this_do_remove_outliers <- df_arg_combos$remove_outliers[i]
+
+  vec_for_mod[[i]] <- fit_model(
+    data = diamonds,
+    mod_formula = this_formula,
+    do_remove_outliers = this_do_remove_outliers
+  )
 }
 ```
 ## Done!
