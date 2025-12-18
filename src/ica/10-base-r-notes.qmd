@@ -212,6 +212,7 @@ filter(tibble(x = x), x > 5)
 
 ```{r}
 # List
+library(purrr)
 y[c(TRUE, FALSE, TRUE)]
 y[y |> map_lgl(~ is.numeric(.x))] # example of a map function!
 y[y |> map_lgl(~ is.character(.x))]
