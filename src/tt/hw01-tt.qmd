@@ -27,8 +27,7 @@ Provide sufficient background for readers to grasp your narrative.
 library(tidytuesdayR)
 library(tidyverse)
 library(lubridate)
-tuesdata <- tidytuesdayR::tt_load('2025-05-13')
-vesuvius <- tuesdata$vesuvius
+vesuvius <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-05-13/vesuvius.csv')
 
 # Cleaning and Filtering to 2014-2024
 vesu <- vesuvius %>%
