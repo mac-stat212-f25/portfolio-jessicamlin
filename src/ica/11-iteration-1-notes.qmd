@@ -428,9 +428,13 @@ df_arg_combos
 
 ```{r}
 remove_outliers <- function(data, what_var, sd_thresh) {
-  data |> 
-    mutate(z_score = ({{what_var}} - mean({{what_var}}, na.rm = TRUE)) / sd({{what_var}}, na.rm = TRUE)) |> 
-    filter(z_score <= sd_thresh)
+  data |>
+    mutate(
+      z_score = ({{ what_var }} - mean({{ what_var }}, na.rm = TRUE)) /
+        sd({{ what_var }}, na.rm = TRUE)
+    ) |>
+    filter(abs(z_score) <= sd_thresh) |>
+    select(-z_score)
 }
 remove_outliers(diamonds, what_var = carat, sd_thresh = 3)
 ```
@@ -438,8 +442,8 @@ remove_outliers(diamonds, what_var = carat, sd_thresh = 3)
 3. Write a function called `fit_model` that implements the different settings for our `diamonds` analysis.
 
 ```{r}
-fit_model <- function(data, mod_formula, remove_outliers_flag) {
-  if (remove_outliers_flag) {
+fit_model <- function(data, mod_formula, do_remove_outliers) {
+  if (do_remove_outliers) {
     data_clean <- remove_outliers(data, what_var = carat, sd_thresh = 3)
   } else {
     data_clean <- data
@@ -469,7 +473,7 @@ vec_for_mod <- vector(mode = "list", length = nrow(df_arg_combos))
 
 for (i in seq_along(vec_for_mod)) {
   this_formula <- df_arg_combos$mod_formula[[i]]
-  this_do_remove_outliers <- df_arg_combos$remove_outliers[i]
+  this_do_remove_outliers <- df_arg_combos$do_remove_outliers[i]
 
   vec_for_mod[[i]] <- fit_model(
     data = diamonds,
