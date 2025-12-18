@@ -12,6 +12,14 @@ By the end of this lesson, you should be able to:
 - Use the `str()` function to examine the structure of an unfamiliar object and extract components from the object
 - Apply printing strategies to streamline the debugging and development process
 
+```{r}
+# loading packages
+library(tibble)
+library(stringr)
+library(dplyr)
+library(purrr)
+```
+
 
 ## Common R Object Structures 
 
@@ -113,8 +121,6 @@ dim(m) # Get the dimensions of the matrix
 - [Tibbles do less and complain more than base data.frames](https://tibble.tidyverse.org/reference/tbl_df-class.html)
 
 ```{r}
-library("tibble")
-
 mod_df <- tibble(x = 1:10, y = 1:10 + rnorm(10))
 
 df <- tibble(a = 1:3, b = c("constant", "x", "x squared"), d = list(lm(y ~ 1, data = mod_df), lm(y ~ x, data = mod_df), lm(y ~ x + I(x^2), data = mod_df)))
@@ -205,14 +211,12 @@ Unlike `filter()`, `NA` indices will be included in the output as `NA`s unless y
 
 ```{r}    
 # Compare with filter
-library(dplyr)
 filter(tibble(x = x), x > 5)
 ```
 
 
 ```{r}
 # List
-library(purrr)
 y[c(TRUE, FALSE, TRUE)]
 y[y |> map_lgl(~ is.numeric(.x))] # example of a map function!
 y[y |> map_lgl(~ is.character(.x))]
