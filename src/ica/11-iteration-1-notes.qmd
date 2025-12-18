@@ -13,6 +13,16 @@ By the end of this lesson, you should be able to:
 - Recognize that vectorized functions help us avoid `for` loops in many situations
 - Use the `across()` function to wrangle multiple variables simultaneously
 
+```{r}
+# loading packages
+library(tibble)
+library(dplyr)
+library(stringr)
+library(ggplot2)
+library(tidyr)
+library(bench)
+```
+
 
 ## Iteration 
 
@@ -307,7 +317,7 @@ Using the `diamonds` dataset:
 
 ```{r}
 diamonds |> 
-  summarize(across(.cols = c(x, y, z), .fns = function(x) {str_c(x, " mn")}))
+  summarize(across(.cols = c(x, y, z), .fns = function(x) {str_c(x, " mm")}))
 ```
 
 2. Convert all numeric columns into character columns.
