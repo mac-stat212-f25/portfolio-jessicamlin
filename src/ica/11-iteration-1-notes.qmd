@@ -173,22 +173,18 @@ bench::mark(
   }
 )
 
-# Example 2: Using a storage container!
-#Notice median (time to run), mem_alloc (how much memory you are using), and gc (garbage collection)
-x <- vector('integer', length = 1e5)
+# Example 2: Using a storage container
+x <- vector("integer", length = 1e5)
 bench::mark(
   for (i in 1:1e5) {
     x[i] <- i
   }
 )
 
-
 # Example 3: Vectorized function
-#Notice median (time to run), mem_alloc (how much memory you are using), and gc (garbage collection)
 bench::mark(
   x <- seq(1, 1e5, by = 1)
 )
-
 ```
 
 ## Exercises 
@@ -228,12 +224,14 @@ str_c("Month ", 1:12, ": ", month.name)
 ```{r}    
 # for loop
 data(diamonds)
-cut_type <- diamonds |> pull(cut) |> levels()
+cut_type <- levels(diamonds$cut)
 cut_vector <- vector("list", length = length(cut_type))
+
 for (i in seq_along(cut_type)) {
   specific_cut <- cut_type[i]
-  sub_diamonds <- diamonds |> 
-    filter(cut == specific_cut)
+  sub_diamonds <- diamonds |>
+    dplyr::filter(cut == specific_cut)
+
   cut_vector[[i]] <- lm(price ~ carat, data = sub_diamonds)
 }
 ```
@@ -313,7 +311,6 @@ What does the list of functions look like? What is the structure of this list ob
 
 ```{r list_str}
 list_of_fcts <- list(mean = mean, med = median, sd = sd)
-list_of_fcts
 str(list_of_fcts)
 ```
 
@@ -326,16 +323,20 @@ Using the `diamonds` dataset:
 1. Transform the `x`, `y`, and `z` columns so that the units of millimeters are displayed (e.g., "4.0 mm").
 
 ```{r}
-diamonds |> 
-  summarize(across(.cols = c(x, y, z), .fns = function(x) {str_c(x, " mm")}))
+diamonds |>
+  dplyr::mutate(
+    dplyr::across(.cols = c(x, y, z), .fns = ~ str_c(.x, " mm"))
+  )
 ```
 
 2. Convert all numeric columns into character columns.
     - Hint: type `is.` and hit Tab in the Console. Scroll through the function options. Do the same with `as.`
 
 ```{r}
-diamonds |> 
-  mutate(across(.cols = where(is.numeric), .fns = as.character))
+diamonds |>
+  dplyr::mutate(
+    dplyr::across(.cols = dplyr::where(is.numeric), .fns = as.character)
+  )
 ```
 
 
@@ -360,19 +361,17 @@ We can map any number of these choices to **arguments** in a custom model-fittin
 
 ```{r fit_model_example}
 fit_model_example <- function(data, impute, filter_to) {
-    if (impute) {
-        data <- some_imputation_function(data)
-    }
-    
-    if (filter_to=="Group 1") {
-        data <- data |> 
-            filter(group == 1)
-    } else if (filter_to == "Groups 1 and 2") {
-        data <- data |> 
-            filter(group %in% c(1,2))
-    }
-    
-    lm(y ~ x1 + x2, data = data)
+  if (impute) {
+    data <- some_imputation_function(data)
+  }
+
+  if (filter_to == "Group 1") {
+    data <- data |> dplyr::filter(group == 1)
+  } else if (filter_to == "Groups 1 and 2") {
+    data <- data |> dplyr::filter(group %in% c(1, 2))
+  }
+
+  lm(y ~ x1 + x2, data = data)
 }
 ```
 
@@ -413,10 +412,16 @@ Work with your partner on the following exercises. As you work, make note of wha
 1. Use `crossing()` to create the data frame of argument combinations for our analyses. Call it `df_arg_combos`. Note that you can create a list of **formula** objects in R with `c(y ~ x1, y ~ x1 + x2)`. (Something like this will be the right hand side of an argument to `crossing()`.)
 
 ```{r}
-df_arg_combos <- crossing(
- mod_formula = c(price ~ carat, price ~ carat + cut, price ~ carat + cut + clarity, price ~ carat + cut + clarity + color), 
-  remove_outliers = c(TRUE, FALSE)
+df_arg_combos <- tidyr::crossing(
+  mod_formula = list(
+    price ~ carat,
+    price ~ carat + cut,
+    price ~ carat + cut + clarity,
+    price ~ carat + cut + clarity + color
+  ),
+  do_remove_outliers = c(TRUE, FALSE)
 )
+df_arg_combos
 ```
 
 2. Write a function called `remove_outliers` that removes outliers in a dataset. The user should be able to supply the dataset (`data`), the variable to remove outliers in (`what_var`), and a threshold on the number of SDs away from the mean used to define outliers (`sd_thresh`). Write your function so that it runs as follows: `remove_outliers(diamonds, what_var = carat, sd_thresh = 3)`.
@@ -432,7 +437,7 @@ remove_outliers(diamonds, what_var = carat, sd_thresh = 3)
 
 3. Write a function called `fit_model` that implements the different settings for our `diamonds` analysis.
 
-```{r eval=FALSE}
+```{r}
 fit_model <- function(data, mod_formula, remove_outliers_flag) {
   if (remove_outliers_flag) {
     data_clean <- remove_outliers(data, what_var = carat, sd_thresh = 3)
