@@ -207,6 +207,46 @@ cookieconsent.run({
   <a href="../../src/ica/cleaning.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Cleaning SFO Weather Data</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../src/ica/03-adv-ggplot-notes.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">3 Advanced Data Viz</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../src/ica/04_adv_maps/code/04-adv-maps-1-notes.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">4 Adv Spatial Viz P1</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../src/ica/06-wrangling-1-notes.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">6 Adv Data wrangling P1</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../src/ica/07-wrangling-2-notes.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">7 Adv Data wrangling P2</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../src/ica/08-missing-data-notes.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">8 Missing Data</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../src/ica/09-functions-notes.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">9 Functions</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../src/ica/10-base-r-notes.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">10 Base R</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../src/ica/11-iteration-1-notes.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">11 Loops+Iter P1</span></a>
+  </div>
+</li>
       </ul>
 </li>
         <li class="sidebar-item sidebar-item-section">
@@ -281,16 +321,15 @@ cookieconsent.run({
 <span id="cb1-2"><a href="#cb1-2"></a><span class="fu">library</span>(tidytuesdayR)</span>
 <span id="cb1-3"><a href="#cb1-3"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb1-4"><a href="#cb1-4"></a><span class="fu">library</span>(lubridate)</span>
-<span id="cb1-5"><a href="#cb1-5"></a>tuesdata <span class="ot">&lt;-</span> tidytuesdayR<span class="sc">::</span><span class="fu">tt_load</span>(<span class="st">'2025-05-13'</span>)</span>
-<span id="cb1-6"><a href="#cb1-6"></a>vesuvius <span class="ot">&lt;-</span> tuesdata<span class="sc">$</span>vesuvius</span>
-<span id="cb1-7"><a href="#cb1-7"></a></span>
-<span id="cb1-8"><a href="#cb1-8"></a><span class="co"># Cleaning and Filtering to 2014-2024</span></span>
-<span id="cb1-9"><a href="#cb1-9"></a>vesu <span class="ot">&lt;-</span> vesuvius <span class="sc">%&gt;%</span></span>
-<span id="cb1-10"><a href="#cb1-10"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb1-11"><a href="#cb1-11"></a>    <span class="at">time =</span> <span class="fu">ymd_hms</span>(time, <span class="at">quiet =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb1-12"><a href="#cb1-12"></a>    <span class="at">year =</span> <span class="fu">year</span>(time)</span>
-<span id="cb1-13"><a href="#cb1-13"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb1-14"><a href="#cb1-14"></a>  <span class="fu">filter</span>(year <span class="sc">&gt;=</span> <span class="dv">2014</span>, year <span class="sc">&lt;=</span> <span class="dv">2024</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-5"><a href="#cb1-5"></a>vesuvius <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="st">'https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-05-13/vesuvius.csv'</span>)</span>
+<span id="cb1-6"><a href="#cb1-6"></a></span>
+<span id="cb1-7"><a href="#cb1-7"></a><span class="co"># Cleaning and Filtering to 2014-2024</span></span>
+<span id="cb1-8"><a href="#cb1-8"></a>vesu <span class="ot">&lt;-</span> vesuvius <span class="sc">%&gt;%</span></span>
+<span id="cb1-9"><a href="#cb1-9"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb1-10"><a href="#cb1-10"></a>    <span class="at">time =</span> <span class="fu">ymd_hms</span>(time, <span class="at">quiet =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb1-11"><a href="#cb1-11"></a>    <span class="at">year =</span> <span class="fu">year</span>(time)</span>
+<span id="cb1-12"><a href="#cb1-12"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb1-13"><a href="#cb1-13"></a>  <span class="fu">filter</span>(year <span class="sc">&gt;=</span> <span class="dv">2014</span>, year <span class="sc">&lt;=</span> <span class="dv">2024</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <section id="yearly-summaries" class="level3"><h3 class="anchored" data-anchor-id="yearly-summaries">Yearly Summaries</h3>
@@ -1074,114 +1113,113 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb8-29"><a href="#cb8-29"></a><span class="fu">library</span>(tidytuesdayR)</span>
 <span id="cb8-30"><a href="#cb8-30"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb8-31"><a href="#cb8-31"></a><span class="fu">library</span>(lubridate)</span>
-<span id="cb8-32"><a href="#cb8-32"></a>tuesdata <span class="ot">&lt;-</span> tidytuesdayR<span class="sc">::</span><span class="fu">tt_load</span>(<span class="st">'2025-05-13'</span>)</span>
-<span id="cb8-33"><a href="#cb8-33"></a>vesuvius <span class="ot">&lt;-</span> tuesdata<span class="sc">$</span>vesuvius</span>
-<span id="cb8-34"><a href="#cb8-34"></a></span>
-<span id="cb8-35"><a href="#cb8-35"></a><span class="co"># Cleaning and Filtering to 2014-2024</span></span>
-<span id="cb8-36"><a href="#cb8-36"></a>vesu <span class="ot">&lt;-</span> vesuvius <span class="sc">%&gt;%</span></span>
-<span id="cb8-37"><a href="#cb8-37"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb8-38"><a href="#cb8-38"></a>    <span class="at">time =</span> <span class="fu">ymd_hms</span>(time, <span class="at">quiet =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb8-39"><a href="#cb8-39"></a>    <span class="at">year =</span> <span class="fu">year</span>(time)</span>
-<span id="cb8-40"><a href="#cb8-40"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb8-41"><a href="#cb8-41"></a>  <span class="fu">filter</span>(year <span class="sc">&gt;=</span> <span class="dv">2014</span>, year <span class="sc">&lt;=</span> <span class="dv">2024</span>)</span>
-<span id="cb8-42"><a href="#cb8-42"></a><span class="in">```</span></span>
-<span id="cb8-43"><a href="#cb8-43"></a></span>
-<span id="cb8-44"><a href="#cb8-44"></a><span class="fu">### Yearly Summaries</span></span>
-<span id="cb8-45"><a href="#cb8-45"></a></span>
-<span id="cb8-48"><a href="#cb8-48"></a><span class="in">```{r}</span></span>
-<span id="cb8-49"><a href="#cb8-49"></a>yearly <span class="ot">&lt;-</span> vesu <span class="sc">%&gt;%</span></span>
-<span id="cb8-50"><a href="#cb8-50"></a>  <span class="fu">group_by</span>(year) <span class="sc">%&gt;%</span></span>
-<span id="cb8-51"><a href="#cb8-51"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb8-52"><a href="#cb8-52"></a>    <span class="at">n_events       =</span> <span class="fu">n</span>(),</span>
-<span id="cb8-53"><a href="#cb8-53"></a>    <span class="at">mean_md        =</span> <span class="fu">mean</span>(duration_magnitude_md, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb8-54"><a href="#cb8-54"></a>    <span class="at">median_md      =</span> <span class="fu">median</span>(duration_magnitude_md, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb8-55"><a href="#cb8-55"></a>    <span class="at">pct_strong_md2 =</span> <span class="fu">mean</span>(duration_magnitude_md <span class="sc">&gt;=</span> <span class="dv">2</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">*</span> <span class="dv">100</span>,</span>
-<span id="cb8-56"><a href="#cb8-56"></a>    <span class="at">median_depth_km=</span> <span class="fu">median</span>(depth_km, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb8-57"><a href="#cb8-57"></a>    <span class="at">pct_shallow2km =</span> <span class="fu">mean</span>(depth_km <span class="sc">&lt;=</span> <span class="dv">2</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">*</span> <span class="dv">100</span></span>
-<span id="cb8-58"><a href="#cb8-58"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb8-59"><a href="#cb8-59"></a>  <span class="fu">ungroup</span>()</span>
-<span id="cb8-60"><a href="#cb8-60"></a></span>
-<span id="cb8-61"><a href="#cb8-61"></a><span class="fu">print</span>(yearly)</span>
-<span id="cb8-62"><a href="#cb8-62"></a><span class="in">```</span></span>
-<span id="cb8-63"><a href="#cb8-63"></a></span>
-<span id="cb8-64"><a href="#cb8-64"></a><span class="fu">### Frequency: Events Per Year</span></span>
-<span id="cb8-65"><a href="#cb8-65"></a></span>
-<span id="cb8-66"><a href="#cb8-66"></a><span class="at">&gt; The number of seismic events recorded each year varied greatly across the decade.</span></span>
-<span id="cb8-67"><a href="#cb8-67"></a><span class="at">&gt; Activity peaked in 2018 and again in 2024, both exceeding 1,300 events, while the lowest point occurred in 2014 with fewer than 750 events.</span></span>
-<span id="cb8-68"><a href="#cb8-68"></a><span class="at">&gt; This suggests alternating period of heightened and reduced seismic activity.</span></span>
-<span id="cb8-69"><a href="#cb8-69"></a></span>
-<span id="cb8-72"><a href="#cb8-72"></a><span class="in">```{r}</span></span>
-<span id="cb8-73"><a href="#cb8-73"></a><span class="fu">ggplot</span>(yearly, <span class="fu">aes</span>(year, n_events)) <span class="sc">+</span></span>
-<span id="cb8-74"><a href="#cb8-74"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb8-75"><a href="#cb8-75"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb8-76"><a href="#cb8-76"></a>  <span class="fu">labs</span>(</span>
-<span id="cb8-77"><a href="#cb8-77"></a>    <span class="at">title =</span> <span class="st">"Seismic Events (2014–2024)"</span>,</span>
-<span id="cb8-78"><a href="#cb8-78"></a>    <span class="at">subtitle =</span> <span class="st">"Number of recorded events per year"</span>,</span>
-<span id="cb8-79"><a href="#cb8-79"></a>    <span class="at">x =</span> <span class="st">"Year"</span>, <span class="at">y =</span> <span class="st">"Events"</span></span>
-<span id="cb8-80"><a href="#cb8-80"></a>  )</span>
-<span id="cb8-81"><a href="#cb8-81"></a><span class="in">```</span></span>
-<span id="cb8-82"><a href="#cb8-82"></a></span>
-<span id="cb8-83"><a href="#cb8-83"></a><span class="fu">### Severity Via Magnitude</span></span>
-<span id="cb8-84"><a href="#cb8-84"></a></span>
-<span id="cb8-85"><a href="#cb8-85"></a><span class="at">&gt; Average magnitudes remained low overall, ranging mostly between 0.1 and 0.3 Md.</span></span>
-<span id="cb8-86"><a href="#cb8-86"></a><span class="at">&gt; While no long-term trend is visible, there were fluctuations, with stronger averages in 2017, 2020, 2022, and 2023 compared to weaker years like 2015 and 2019.</span></span>
-<span id="cb8-87"><a href="#cb8-87"></a><span class="at">&gt; This indicates that event intensity is variable from year to year but does not show steady growth or decline.</span></span>
-<span id="cb8-88"><a href="#cb8-88"></a></span>
-<span id="cb8-91"><a href="#cb8-91"></a><span class="in">```{r}</span></span>
-<span id="cb8-92"><a href="#cb8-92"></a><span class="fu">ggplot</span>(yearly, <span class="fu">aes</span>(year, mean_md)) <span class="sc">+</span></span>
-<span id="cb8-93"><a href="#cb8-93"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb8-94"><a href="#cb8-94"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb8-95"><a href="#cb8-95"></a>  <span class="fu">labs</span>(</span>
-<span id="cb8-96"><a href="#cb8-96"></a>    <span class="at">title =</span> <span class="st">"Average Duration Magnitude (Md) by Year (2014-2024)"</span>,</span>
-<span id="cb8-97"><a href="#cb8-97"></a>    <span class="at">subtitle =</span> <span class="st">"Higher values indicate stronger events on average"</span>,</span>
-<span id="cb8-98"><a href="#cb8-98"></a>    <span class="at">x =</span> <span class="st">"Year"</span>, <span class="at">y =</span> <span class="st">"Mean Md"</span></span>
-<span id="cb8-99"><a href="#cb8-99"></a>  )</span>
-<span id="cb8-100"><a href="#cb8-100"></a><span class="in">```</span></span>
-<span id="cb8-101"><a href="#cb8-101"></a></span>
-<span id="cb8-102"><a href="#cb8-102"></a><span class="fu">### Severity Via Depth</span></span>
-<span id="cb8-103"><a href="#cb8-103"></a></span>
-<span id="cb8-104"><a href="#cb8-104"></a><span class="at">&gt; Seismic events at Vesuvius were consistently shallow, but their depth shifted over time.</span></span>
-<span id="cb8-105"><a href="#cb8-105"></a><span class="at">&gt; Between 2014 and 2018, events trended slightly shallower, while from 2019 to 2024, they grew deeper, culminating in the greatest depth in 2024.</span></span>
-<span id="cb8-106"><a href="#cb8-106"></a><span class="at">&gt; This pattern shows a gradual movement of seismic activity to deeper levels in recent years.</span></span>
-<span id="cb8-107"><a href="#cb8-107"></a></span>
-<span id="cb8-110"><a href="#cb8-110"></a><span class="in">```{r}</span></span>
-<span id="cb8-111"><a href="#cb8-111"></a><span class="fu">ggplot</span>(yearly, <span class="fu">aes</span>(year, median_depth_km)) <span class="sc">+</span></span>
-<span id="cb8-112"><a href="#cb8-112"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb8-113"><a href="#cb8-113"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb8-114"><a href="#cb8-114"></a>  <span class="fu">labs</span>(</span>
-<span id="cb8-115"><a href="#cb8-115"></a>    <span class="at">title =</span> <span class="st">"Median Event Depth by Year (2014-2024)"</span>,</span>
-<span id="cb8-116"><a href="#cb8-116"></a>    <span class="at">subtitle =</span> <span class="st">"Smaller values = shallower events"</span>,</span>
-<span id="cb8-117"><a href="#cb8-117"></a>    <span class="at">x =</span> <span class="st">"Year"</span>, <span class="at">y =</span> <span class="st">"Median depth (km)"</span></span>
-<span id="cb8-118"><a href="#cb8-118"></a>  )</span>
-<span id="cb8-119"><a href="#cb8-119"></a><span class="in">```</span></span>
-<span id="cb8-120"><a href="#cb8-120"></a></span>
-<span id="cb8-121"><a href="#cb8-121"></a><span class="fu">### Relationship Between Magnitude and Depth</span></span>
-<span id="cb8-122"><a href="#cb8-122"></a></span>
-<span id="cb8-123"><a href="#cb8-123"></a><span class="at">&gt; Most seismic events occurred at depths shallower than 1 km and with magnitudes clustered between 0 and 1 Md.</span></span>
-<span id="cb8-124"><a href="#cb8-124"></a><span class="at">&gt; A few stronger events reached magnitudes near 3 Md, while negative magnitudes captured very small micro seismic activity.</span></span>
-<span id="cb8-125"><a href="#cb8-125"></a><span class="at">&gt; Overall, the majority of events were both weak and shallow, with only a small proportion being larger or deeper.</span></span>
-<span id="cb8-126"><a href="#cb8-126"></a></span>
-<span id="cb8-129"><a href="#cb8-129"></a><span class="in">```{r}</span></span>
-<span id="cb8-130"><a href="#cb8-130"></a>vesu_scatter <span class="ot">&lt;-</span> vesu <span class="sc">%&gt;%</span></span>
-<span id="cb8-131"><a href="#cb8-131"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(duration_magnitude_md), <span class="sc">!</span><span class="fu">is.na</span>(depth_km))</span>
-<span id="cb8-132"><a href="#cb8-132"></a></span>
-<span id="cb8-133"><a href="#cb8-133"></a><span class="fu">ggplot</span>(vesu_scatter, <span class="fu">aes</span>(<span class="at">x =</span> duration_magnitude_md, <span class="at">y =</span> depth_km)) <span class="sc">+</span></span>
-<span id="cb8-134"><a href="#cb8-134"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.15</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb8-135"><a href="#cb8-135"></a>  <span class="fu">scale_y_reverse</span>() <span class="sc">+</span></span>
-<span id="cb8-136"><a href="#cb8-136"></a>  <span class="fu">labs</span>(</span>
-<span id="cb8-137"><a href="#cb8-137"></a>    <span class="at">title =</span> <span class="st">"Magnitude vs. Depth (2014–2024)"</span>,</span>
-<span id="cb8-138"><a href="#cb8-138"></a>    <span class="at">subtitle =</span> <span class="st">"Points are individual events; y-axis reversed so shallow is at the top"</span>,</span>
-<span id="cb8-139"><a href="#cb8-139"></a>    <span class="at">x =</span> <span class="st">"Duration magnitude (Md)"</span>,</span>
-<span id="cb8-140"><a href="#cb8-140"></a>    <span class="at">y =</span> <span class="st">"Depth (km; reversed)"</span></span>
-<span id="cb8-141"><a href="#cb8-141"></a>  )</span>
-<span id="cb8-142"><a href="#cb8-142"></a><span class="in">```</span></span>
-<span id="cb8-143"><a href="#cb8-143"></a></span>
-<span id="cb8-144"><a href="#cb8-144"></a><span class="fu">## Conclusion</span></span>
-<span id="cb8-145"><a href="#cb8-145"></a></span>
-<span id="cb8-146"><a href="#cb8-146"></a><span class="at">&gt; Between 2014 and 2024, seismic activity at Vesuvius has been marked by fluctuations in frequency, intensity, and depth.</span></span>
-<span id="cb8-147"><a href="#cb8-147"></a><span class="at">&gt; While the number of events spiked in 2018 and 2024, the average magnitudes remained low overall, suggesting that most earthquakes were relatively weak.</span></span>
-<span id="cb8-148"><a href="#cb8-148"></a><span class="at">&gt; Depth patterns show that events have become deeper in more recent years, though they are still generally shallow.</span></span>
-<span id="cb8-149"><a href="#cb8-149"></a><span class="at">&gt; Taken together, these results highlight that seismic activity at Vesuvius is persistent but typically characterized by small, shallow earthquakes, with only occasional stronger or deeper events.</span></span>
+<span id="cb8-32"><a href="#cb8-32"></a>vesuvius <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="st">'https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-05-13/vesuvius.csv'</span>)</span>
+<span id="cb8-33"><a href="#cb8-33"></a></span>
+<span id="cb8-34"><a href="#cb8-34"></a><span class="co"># Cleaning and Filtering to 2014-2024</span></span>
+<span id="cb8-35"><a href="#cb8-35"></a>vesu <span class="ot">&lt;-</span> vesuvius <span class="sc">%&gt;%</span></span>
+<span id="cb8-36"><a href="#cb8-36"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb8-37"><a href="#cb8-37"></a>    <span class="at">time =</span> <span class="fu">ymd_hms</span>(time, <span class="at">quiet =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb8-38"><a href="#cb8-38"></a>    <span class="at">year =</span> <span class="fu">year</span>(time)</span>
+<span id="cb8-39"><a href="#cb8-39"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb8-40"><a href="#cb8-40"></a>  <span class="fu">filter</span>(year <span class="sc">&gt;=</span> <span class="dv">2014</span>, year <span class="sc">&lt;=</span> <span class="dv">2024</span>)</span>
+<span id="cb8-41"><a href="#cb8-41"></a><span class="in">```</span></span>
+<span id="cb8-42"><a href="#cb8-42"></a></span>
+<span id="cb8-43"><a href="#cb8-43"></a><span class="fu">### Yearly Summaries</span></span>
+<span id="cb8-44"><a href="#cb8-44"></a></span>
+<span id="cb8-47"><a href="#cb8-47"></a><span class="in">```{r}</span></span>
+<span id="cb8-48"><a href="#cb8-48"></a>yearly <span class="ot">&lt;-</span> vesu <span class="sc">%&gt;%</span></span>
+<span id="cb8-49"><a href="#cb8-49"></a>  <span class="fu">group_by</span>(year) <span class="sc">%&gt;%</span></span>
+<span id="cb8-50"><a href="#cb8-50"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb8-51"><a href="#cb8-51"></a>    <span class="at">n_events       =</span> <span class="fu">n</span>(),</span>
+<span id="cb8-52"><a href="#cb8-52"></a>    <span class="at">mean_md        =</span> <span class="fu">mean</span>(duration_magnitude_md, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb8-53"><a href="#cb8-53"></a>    <span class="at">median_md      =</span> <span class="fu">median</span>(duration_magnitude_md, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb8-54"><a href="#cb8-54"></a>    <span class="at">pct_strong_md2 =</span> <span class="fu">mean</span>(duration_magnitude_md <span class="sc">&gt;=</span> <span class="dv">2</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">*</span> <span class="dv">100</span>,</span>
+<span id="cb8-55"><a href="#cb8-55"></a>    <span class="at">median_depth_km=</span> <span class="fu">median</span>(depth_km, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb8-56"><a href="#cb8-56"></a>    <span class="at">pct_shallow2km =</span> <span class="fu">mean</span>(depth_km <span class="sc">&lt;=</span> <span class="dv">2</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">*</span> <span class="dv">100</span></span>
+<span id="cb8-57"><a href="#cb8-57"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb8-58"><a href="#cb8-58"></a>  <span class="fu">ungroup</span>()</span>
+<span id="cb8-59"><a href="#cb8-59"></a></span>
+<span id="cb8-60"><a href="#cb8-60"></a><span class="fu">print</span>(yearly)</span>
+<span id="cb8-61"><a href="#cb8-61"></a><span class="in">```</span></span>
+<span id="cb8-62"><a href="#cb8-62"></a></span>
+<span id="cb8-63"><a href="#cb8-63"></a><span class="fu">### Frequency: Events Per Year</span></span>
+<span id="cb8-64"><a href="#cb8-64"></a></span>
+<span id="cb8-65"><a href="#cb8-65"></a><span class="at">&gt; The number of seismic events recorded each year varied greatly across the decade.</span></span>
+<span id="cb8-66"><a href="#cb8-66"></a><span class="at">&gt; Activity peaked in 2018 and again in 2024, both exceeding 1,300 events, while the lowest point occurred in 2014 with fewer than 750 events.</span></span>
+<span id="cb8-67"><a href="#cb8-67"></a><span class="at">&gt; This suggests alternating period of heightened and reduced seismic activity.</span></span>
+<span id="cb8-68"><a href="#cb8-68"></a></span>
+<span id="cb8-71"><a href="#cb8-71"></a><span class="in">```{r}</span></span>
+<span id="cb8-72"><a href="#cb8-72"></a><span class="fu">ggplot</span>(yearly, <span class="fu">aes</span>(year, n_events)) <span class="sc">+</span></span>
+<span id="cb8-73"><a href="#cb8-73"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb8-74"><a href="#cb8-74"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb8-75"><a href="#cb8-75"></a>  <span class="fu">labs</span>(</span>
+<span id="cb8-76"><a href="#cb8-76"></a>    <span class="at">title =</span> <span class="st">"Seismic Events (2014–2024)"</span>,</span>
+<span id="cb8-77"><a href="#cb8-77"></a>    <span class="at">subtitle =</span> <span class="st">"Number of recorded events per year"</span>,</span>
+<span id="cb8-78"><a href="#cb8-78"></a>    <span class="at">x =</span> <span class="st">"Year"</span>, <span class="at">y =</span> <span class="st">"Events"</span></span>
+<span id="cb8-79"><a href="#cb8-79"></a>  )</span>
+<span id="cb8-80"><a href="#cb8-80"></a><span class="in">```</span></span>
+<span id="cb8-81"><a href="#cb8-81"></a></span>
+<span id="cb8-82"><a href="#cb8-82"></a><span class="fu">### Severity Via Magnitude</span></span>
+<span id="cb8-83"><a href="#cb8-83"></a></span>
+<span id="cb8-84"><a href="#cb8-84"></a><span class="at">&gt; Average magnitudes remained low overall, ranging mostly between 0.1 and 0.3 Md.</span></span>
+<span id="cb8-85"><a href="#cb8-85"></a><span class="at">&gt; While no long-term trend is visible, there were fluctuations, with stronger averages in 2017, 2020, 2022, and 2023 compared to weaker years like 2015 and 2019.</span></span>
+<span id="cb8-86"><a href="#cb8-86"></a><span class="at">&gt; This indicates that event intensity is variable from year to year but does not show steady growth or decline.</span></span>
+<span id="cb8-87"><a href="#cb8-87"></a></span>
+<span id="cb8-90"><a href="#cb8-90"></a><span class="in">```{r}</span></span>
+<span id="cb8-91"><a href="#cb8-91"></a><span class="fu">ggplot</span>(yearly, <span class="fu">aes</span>(year, mean_md)) <span class="sc">+</span></span>
+<span id="cb8-92"><a href="#cb8-92"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb8-93"><a href="#cb8-93"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb8-94"><a href="#cb8-94"></a>  <span class="fu">labs</span>(</span>
+<span id="cb8-95"><a href="#cb8-95"></a>    <span class="at">title =</span> <span class="st">"Average Duration Magnitude (Md) by Year (2014-2024)"</span>,</span>
+<span id="cb8-96"><a href="#cb8-96"></a>    <span class="at">subtitle =</span> <span class="st">"Higher values indicate stronger events on average"</span>,</span>
+<span id="cb8-97"><a href="#cb8-97"></a>    <span class="at">x =</span> <span class="st">"Year"</span>, <span class="at">y =</span> <span class="st">"Mean Md"</span></span>
+<span id="cb8-98"><a href="#cb8-98"></a>  )</span>
+<span id="cb8-99"><a href="#cb8-99"></a><span class="in">```</span></span>
+<span id="cb8-100"><a href="#cb8-100"></a></span>
+<span id="cb8-101"><a href="#cb8-101"></a><span class="fu">### Severity Via Depth</span></span>
+<span id="cb8-102"><a href="#cb8-102"></a></span>
+<span id="cb8-103"><a href="#cb8-103"></a><span class="at">&gt; Seismic events at Vesuvius were consistently shallow, but their depth shifted over time.</span></span>
+<span id="cb8-104"><a href="#cb8-104"></a><span class="at">&gt; Between 2014 and 2018, events trended slightly shallower, while from 2019 to 2024, they grew deeper, culminating in the greatest depth in 2024.</span></span>
+<span id="cb8-105"><a href="#cb8-105"></a><span class="at">&gt; This pattern shows a gradual movement of seismic activity to deeper levels in recent years.</span></span>
+<span id="cb8-106"><a href="#cb8-106"></a></span>
+<span id="cb8-109"><a href="#cb8-109"></a><span class="in">```{r}</span></span>
+<span id="cb8-110"><a href="#cb8-110"></a><span class="fu">ggplot</span>(yearly, <span class="fu">aes</span>(year, median_depth_km)) <span class="sc">+</span></span>
+<span id="cb8-111"><a href="#cb8-111"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb8-112"><a href="#cb8-112"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb8-113"><a href="#cb8-113"></a>  <span class="fu">labs</span>(</span>
+<span id="cb8-114"><a href="#cb8-114"></a>    <span class="at">title =</span> <span class="st">"Median Event Depth by Year (2014-2024)"</span>,</span>
+<span id="cb8-115"><a href="#cb8-115"></a>    <span class="at">subtitle =</span> <span class="st">"Smaller values = shallower events"</span>,</span>
+<span id="cb8-116"><a href="#cb8-116"></a>    <span class="at">x =</span> <span class="st">"Year"</span>, <span class="at">y =</span> <span class="st">"Median depth (km)"</span></span>
+<span id="cb8-117"><a href="#cb8-117"></a>  )</span>
+<span id="cb8-118"><a href="#cb8-118"></a><span class="in">```</span></span>
+<span id="cb8-119"><a href="#cb8-119"></a></span>
+<span id="cb8-120"><a href="#cb8-120"></a><span class="fu">### Relationship Between Magnitude and Depth</span></span>
+<span id="cb8-121"><a href="#cb8-121"></a></span>
+<span id="cb8-122"><a href="#cb8-122"></a><span class="at">&gt; Most seismic events occurred at depths shallower than 1 km and with magnitudes clustered between 0 and 1 Md.</span></span>
+<span id="cb8-123"><a href="#cb8-123"></a><span class="at">&gt; A few stronger events reached magnitudes near 3 Md, while negative magnitudes captured very small micro seismic activity.</span></span>
+<span id="cb8-124"><a href="#cb8-124"></a><span class="at">&gt; Overall, the majority of events were both weak and shallow, with only a small proportion being larger or deeper.</span></span>
+<span id="cb8-125"><a href="#cb8-125"></a></span>
+<span id="cb8-128"><a href="#cb8-128"></a><span class="in">```{r}</span></span>
+<span id="cb8-129"><a href="#cb8-129"></a>vesu_scatter <span class="ot">&lt;-</span> vesu <span class="sc">%&gt;%</span></span>
+<span id="cb8-130"><a href="#cb8-130"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(duration_magnitude_md), <span class="sc">!</span><span class="fu">is.na</span>(depth_km))</span>
+<span id="cb8-131"><a href="#cb8-131"></a></span>
+<span id="cb8-132"><a href="#cb8-132"></a><span class="fu">ggplot</span>(vesu_scatter, <span class="fu">aes</span>(<span class="at">x =</span> duration_magnitude_md, <span class="at">y =</span> depth_km)) <span class="sc">+</span></span>
+<span id="cb8-133"><a href="#cb8-133"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.15</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb8-134"><a href="#cb8-134"></a>  <span class="fu">scale_y_reverse</span>() <span class="sc">+</span></span>
+<span id="cb8-135"><a href="#cb8-135"></a>  <span class="fu">labs</span>(</span>
+<span id="cb8-136"><a href="#cb8-136"></a>    <span class="at">title =</span> <span class="st">"Magnitude vs. Depth (2014–2024)"</span>,</span>
+<span id="cb8-137"><a href="#cb8-137"></a>    <span class="at">subtitle =</span> <span class="st">"Points are individual events; y-axis reversed so shallow is at the top"</span>,</span>
+<span id="cb8-138"><a href="#cb8-138"></a>    <span class="at">x =</span> <span class="st">"Duration magnitude (Md)"</span>,</span>
+<span id="cb8-139"><a href="#cb8-139"></a>    <span class="at">y =</span> <span class="st">"Depth (km; reversed)"</span></span>
+<span id="cb8-140"><a href="#cb8-140"></a>  )</span>
+<span id="cb8-141"><a href="#cb8-141"></a><span class="in">```</span></span>
+<span id="cb8-142"><a href="#cb8-142"></a></span>
+<span id="cb8-143"><a href="#cb8-143"></a><span class="fu">## Conclusion</span></span>
+<span id="cb8-144"><a href="#cb8-144"></a></span>
+<span id="cb8-145"><a href="#cb8-145"></a><span class="at">&gt; Between 2014 and 2024, seismic activity at Vesuvius has been marked by fluctuations in frequency, intensity, and depth.</span></span>
+<span id="cb8-146"><a href="#cb8-146"></a><span class="at">&gt; While the number of events spiked in 2018 and 2024, the average magnitudes remained low overall, suggesting that most earthquakes were relatively weak.</span></span>
+<span id="cb8-147"><a href="#cb8-147"></a><span class="at">&gt; Depth patterns show that events have become deeper in more recent years, though they are still generally shallow.</span></span>
+<span id="cb8-148"><a href="#cb8-148"></a><span class="at">&gt; Taken together, these results highlight that seismic activity at Vesuvius is persistent but typically characterized by small, shallow earthquakes, with only occasional stronger or deeper events.</span></span>
 </code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
