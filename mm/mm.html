@@ -63,7 +63,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../src/ica/11-iteration-1-notes.html" rel="prev">
+<link href="../src/ica/18-interactive-viz-notes.html" rel="prev">
 <script src="../site_libs/cookie-consent/cookie-consent.js"></script>
 <link href="../site_libs/cookie-consent/cookie-consent.css" rel="stylesheet">
 <script src="../site_libs/quarto-html/quarto.js"></script>
@@ -265,6 +265,26 @@ cookieconsent.run({
   <a href="../src/ica/11-iteration-1-notes.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">11 Loops+Iter P1</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../src/ica/12-iteration-2-notes.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">12 Loops+Iter P2</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../src/ica/15-scraping-notes.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">15 Web scraping</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../src/ica/16-databases-notes.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">16 Databases and SQL</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../src/ica/18-interactive-viz-notes.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">18 Interactive Viz</span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -321,7 +341,7 @@ cookieconsent.run({
 
 <section id="creativity" class="level2">
 <h2 class="anchored" data-anchor-id="creativity">Creativity</h2>
-<p><img src="0808-mind_map_example.jpg" class="img-fluid" alt="0808-mind_map_example.jpg"> <embed src="2 Review.pdf" class="img-fluid"></p>
+<p><embed src="2 Review.pdf" class="img-fluid"> <embed src="3 Adv Data Viz.pdf" class="img-fluid"> <embed src="4 Adv Spatial Viz P1.pdf" class="img-fluid"> <embed src="5 Adv Spatial Viz P2.pdf" class="img-fluid"> <embed src="6 Adv Data Wrangling P1.pdf" class="img-fluid"> <embed src="7 Adv Data Wrangling P2.pdf" class="img-fluid"> <embed src="8 Missing Data.pdf" class="img-fluid"> <embed src="9 Functions.pdf" class="img-fluid"> <embed src="10 Base R.pdf" class="img-fluid"> <embed src="11 Loops+Iter P1.pdf" class="img-fluid"> <embed src="12 Loops+Iter P2.pdf" class="img-fluid"> <embed src="13 APIs P1.pdf" class="img-fluid"> <embed src="15 Web Scraping.pdf" class="img-fluid"> <embed src="16 Databases and SQL.pdf" class="img-fluid"> <embed src="17 Effective Viz.pdf" class="img-fluid"> <embed src="18 Interactive Viz.pdf" class="img-fluid"> <embed src="19 Quality Control.pdf" class="img-fluid"></p>
 
 
 <!-- -->
@@ -948,8 +968,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation column-body">
   <div class="nav-page nav-page-previous">
-      <a href="../src/ica/11-iteration-1-notes.html" class="pagination-link" aria-label="11 Loops+Iter P1">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">11 Loops+Iter P1</span></span>
+      <a href="../src/ica/18-interactive-viz-notes.html" class="pagination-link" aria-label="18 Interactive Viz">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">18 Interactive Viz</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
@@ -959,8 +979,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb1-2"><a href="#cb1-2"></a></span>
 <span id="cb1-3"><a href="#cb1-3"></a><span class="fu">## Creativity</span></span>
 <span id="cb1-4"><a href="#cb1-4"></a></span>
-<span id="cb1-5"><a href="#cb1-5"></a><span class="al">![0808-mind_map_example.jpg](0808-mind_map_example.jpg)</span></span>
-<span id="cb1-6"><a href="#cb1-6"></a><span class="al">![2 Review.pdf](2 Review.pdf)</span></span></code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
+<span id="cb1-5"><a href="#cb1-5"></a><span class="al">![2 Review.pdf](2 Review.pdf)</span></span>
+<span id="cb1-6"><a href="#cb1-6"></a><span class="al">![3 Adv Data Viz.pdf](3 Adv Data Viz.pdf)</span></span>
+<span id="cb1-7"><a href="#cb1-7"></a><span class="al">![4 Adv Spatial Viz P1.pdf](4 Adv Spatial Viz P1.pdf)</span></span>
+<span id="cb1-8"><a href="#cb1-8"></a><span class="al">![5 Adv Spatial Viz P2.pdf](5 Adv Spatial Viz P2.pdf)</span></span>
+<span id="cb1-9"><a href="#cb1-9"></a><span class="al">![6 Adv Data Wrangling P1.pdf](6 Adv Data Wrangling P1.pdf)</span></span>
+<span id="cb1-10"><a href="#cb1-10"></a><span class="al">![7 Adv Data Wrangling P2.pdf](7 Adv Data Wrangling P2.pdf)</span></span>
+<span id="cb1-11"><a href="#cb1-11"></a><span class="al">![8 Missing Data.pdf](8 Missing Data.pdf)</span></span>
+<span id="cb1-12"><a href="#cb1-12"></a><span class="al">![9 Functions.pdf](9 Functions.pdf)</span></span>
+<span id="cb1-13"><a href="#cb1-13"></a><span class="al">![10 Base R.pdf](10 Base R.pdf)</span></span>
+<span id="cb1-14"><a href="#cb1-14"></a><span class="al">![11 Loops+Iter P1.pdf](11 Loops+Iter P1.pdf)</span></span>
+<span id="cb1-15"><a href="#cb1-15"></a><span class="al">![12 Loops+Iter P2.pdf](12 Loops+Iter P2.pdf)</span></span>
+<span id="cb1-16"><a href="#cb1-16"></a><span class="al">![13 APIs P1.pdf](13 APIs P1.pdf)</span></span>
+<span id="cb1-17"><a href="#cb1-17"></a><span class="al">![15 Web Scraping.pdf](15 Web Scraping.pdf)</span></span>
+<span id="cb1-18"><a href="#cb1-18"></a><span class="al">![16 Databases and SQL.pdf](16 Databases and SQL.pdf)</span></span>
+<span id="cb1-19"><a href="#cb1-19"></a><span class="al">![17 Effective Viz.pdf](17 Effective Viz.pdf)</span></span>
+<span id="cb1-20"><a href="#cb1-20"></a><span class="al">![18 Interactive Viz.pdf](18 Interactive Viz.pdf)</span></span>
+<span id="cb1-21"><a href="#cb1-21"></a><span class="al">![19 Quality Control.pdf](19 Quality Control.pdf)</span></span></code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 <footer class="footer">
