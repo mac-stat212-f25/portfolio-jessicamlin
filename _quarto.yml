@@ -60,7 +60,7 @@ book:
     - text: "Welcome"
       href: index.qmd
 
-    - part: "Prof Viz"
+    - part: "Professional Viz"
       chapters:
       - src/pv/pv-01.qmd
 
