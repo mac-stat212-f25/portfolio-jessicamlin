@@ -283,6 +283,11 @@ cookieconsent.run({
   <a href="../../mm/mm.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Mind Maps</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../exams/exams.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Exam Summary Sheets</span></a>
+  </div>
+</li>
       </ul>
 </li>
     </ul>
@@ -544,7 +549,7 @@ NULL</code></pre>
 <pre><code># A tibble: 1 × 6
   expression                             min median `itr/sec` mem_alloc `gc/sec`
   &lt;bch:expr&gt;                          &lt;bch:&gt; &lt;bch:&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;
-1 for (i in 1:1e+05) { x &lt;- c(x, i) }  26.5s  26.5s    0.0377    18.6GB     46.5</code></pre>
+1 for (i in 1:1e+05) { x &lt;- c(x, i) }  26.2s  26.2s    0.0381    18.6GB     47.0</code></pre>
 </div>
 <details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1"></a><span class="co"># Example 2: Using a storage container</span></span>
 <span id="cb32-2"><a href="#cb32-2"></a>x <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="st">"integer"</span>, <span class="at">length =</span> <span class="fl">1e5</span>)</span>
@@ -557,7 +562,7 @@ NULL</code></pre>
 <pre><code># A tibble: 1 × 6
   expression                            min  median `itr/sec` mem_alloc `gc/sec`
   &lt;bch:expr&gt;                       &lt;bch:tm&gt; &lt;bch:t&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;
-1 for (i in 1:1e+05) { x[i] &lt;- i }   3.57ms  3.75ms      267.     402KB     2.02</code></pre>
+1 for (i in 1:1e+05) { x[i] &lt;- i }   3.58ms  3.73ms      267.     402KB     2.02</code></pre>
 </div>
 <details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1"></a><span class="co"># Example 3: Vectorized function</span></span>
 <span id="cb34-2"><a href="#cb34-2"></a>bench<span class="sc">::</span><span class="fu">mark</span>(</span>
@@ -567,7 +572,7 @@ NULL</code></pre>
 <pre><code># A tibble: 1 × 6
   expression                      min   median `itr/sec` mem_alloc `gc/sec`
   &lt;bch:expr&gt;                 &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;
-1 x &lt;- seq(1, 1e+05, by = 1)    425µs    550µs     1820.    1.91MB     70.2</code></pre>
+1 x &lt;- seq(1, 1e+05, by = 1)    425µs    548µs     1831.    1.91MB     69.9</code></pre>
 </div>
 </div>
 </section></section><section id="exercises" class="level2"><h2 class="anchored" data-anchor-id="exercises">Exercises</h2>
